@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.List;
+
 public class Pais {
     private int id;
     private String nombre;
@@ -7,6 +9,8 @@ public class Pais {
     private String tipoRegion;
     private String codigoAlfa2;
     private String codigoAlfa3;
+
+    private List<Region> regiones;
     
     public int getId() {
         return id;
@@ -43,6 +47,12 @@ public class Pais {
     }
     public void setCodigoAlfa3(String codigoAlfa3) {
         this.codigoAlfa3 = codigoAlfa3;
+    }
+    public List<Region> getRegiones() {
+        return regiones;
+    }
+    public void setRegiones(List<Region> regiones) {
+        this.regiones = regiones;
     }
 
    
