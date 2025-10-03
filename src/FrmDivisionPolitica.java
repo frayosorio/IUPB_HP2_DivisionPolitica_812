@@ -1,11 +1,14 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
@@ -23,6 +26,7 @@ public class FrmDivisionPolitica extends JFrame {
     private JTree arbol;
     DefaultMutableTreeNode nodoRaiz;
     JLabel lblMapa;
+    private double escala = 1;
 
     public FrmDivisionPolitica() {
         setSize(600, 400);
@@ -58,6 +62,20 @@ public class FrmDivisionPolitica extends JFrame {
 
         // Crear
         lblMapa = new JLabel();
+        lblMapa.addMouseWheelListener(new MouseWheelListener() {
+
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                if (e.getWheelRotation() < 0) {
+                    escala *= 1.1; // aumenta un 10%
+                } else {
+                    escala /= 1.1; // aleja un 10%
+                }
+                mostrarMapa();
+            }
+
+        });
+
         JScrollPane spMapa = new JScrollPane(lblMapa);
 
         // Divisor entre el árbol y el mapa
@@ -75,8 +93,22 @@ public class FrmDivisionPolitica extends JFrame {
         PaisServicio.mostrar(nodoRaiz);
     }
 
-    private void mostrarMapa() {
+    private String getNombrePais() {
+        DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) arbol.getLastSelectedPathComponent();
+        if (nodoSeleccionado != nodoRaiz) {
+            while (nodoSeleccionado.getParent() != nodoRaiz) {
+                nodoSeleccionado = (DefaultMutableTreeNode) nodoSeleccionado.getParent();
+            }
+            return nodoSeleccionado.toString().substring(5);
+        }
+        return "";
+    }
 
+    private void mostrarMapa() {
+        String nombrePais = getNombrePais();
+        if (!nombrePais.isEmpty()) {
+            PaisServicio.mostrarMapa(lblMapa, nombrePais, escala);
+        }
     }
 
     private void reproducirHimno() {
