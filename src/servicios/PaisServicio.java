@@ -70,12 +70,21 @@ public class PaisServicio {
             int ancho = (int) (imgMapa.getIconWidth() * escala);
             int alto = (int) (imgMapa.getIconHeight() * escala);
 
-            ImageIcon imgMapaEscalado=new ImageIcon(imgMapa.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH));
+            ImageIcon imgMapaEscalado = new ImageIcon(
+                    imgMapa.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH));
 
             lblMapa.setIcon(imgMapaEscalado);
         } else {
             lblMapa.setIcon(null);
             JOptionPane.showMessageDialog(null, "No hay mapa disponible para " + nombrePais);
+        }
+    }
+
+    public static void reproducir(String nombrePais) {
+        String rutaHimno = "src/himnos/" + nombrePais + ".mp3";
+        File archivoHimno = new File(rutaHimno);
+        if (archivoHimno.exists()) {
+            ReproductorAudio.reproducir(rutaHimno);
         }
     }
 

@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
@@ -112,7 +111,10 @@ public class FrmDivisionPolitica extends JFrame {
     }
 
     private void reproducirHimno() {
-
+        String nombrePais = getNombrePais();
+        if (!nombrePais.isEmpty()) {
+            PaisServicio.reproducir(nombrePais);
+        }
     }
 
 }
